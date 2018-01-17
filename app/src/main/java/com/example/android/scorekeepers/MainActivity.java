@@ -76,43 +76,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AdInTeamA(View view){
-        if (deuce && !adInA && !adInB || !deuce && adInA && adScoreA == 0 && !adInB || !deuce && adInA && adScoreA == 1 && !adInB || !deuce && !adInB){
-            adScoreA++;
-            adScoreB = 0;
-            valueTeamA = "Ad";
-            adInB = false;
-            deuce = false;
-            adInA = true;
+        if (scoreTeamA == 40 && scoreTeamB == 40) {
+            if (deuce && !adInA && !adInB || !deuce && adInA && adScoreA == 0 && !adInB || !deuce && adInA && adScoreA == 1 && !adInB || !deuce && !adInB) {
+                adScoreA++;
+                adScoreB = 0;
+                valueTeamA = "Ad";
+                adInB = false;
+                deuce = false;
+                adInA = true;
+            }
+            if (adScoreB == 1 && adInB && !adInA || adInB && !adInA || adInB && adScoreB == 1 || adInA && adInB) {
+                adScoreA = 0;
+                adScoreB = 0;
+                deuce = true;
+                valueTeamA = "Deuce";
+                valueTeamB = "Deuce";
+                adInB = false;
+            }
+            if (adScoreA == 2) {
+                winner = true;
+            }
+            if (winner) {
+                winScoreTeamA++;
+                scoreTeamA = 0;
+                scoreTeamB = 0;
+                valueTeamA = "";
+                valueTeamB = "";
+                deuce = false;
+                adInA = false;
+                adInB = false;
+                adScoreA = 0;
+                adScoreB = 0;
+                winner = false;
+            }
+            displayForTeamA(scoreTeamA);
+            displayForTeamB(scoreTeamB);
+            displayAMessage(valueTeamA);
+            displayBMessage(valueTeamB);
+            displayScoreForTeamA(winScoreTeamA);
         }
-        if (adScoreB == 1 && adInB && !adInA || adInB && !adInA || adInB && adScoreB == 1 || adInA && adInB){
-            adScoreA = 0;
-            adScoreB = 0;
-            deuce = true;
-            valueTeamA = "Deuce";
-            valueTeamB = "Deuce";
-            adInB = false;
-        }
-        if (adScoreA == 2){
-            winner = true;
-        }
-        if (winner) {
-            winScoreTeamA++;
-            scoreTeamA = 0;
-            scoreTeamB = 0;
-            valueTeamA = "";
-            valueTeamB = "";
-            deuce = false;
-            adInA = false;
-            adInB = false;
-            adScoreA = 0;
-            adScoreB = 0;
-            winner = false;
-        }
-        displayForTeamA(scoreTeamA);
-        displayForTeamB(scoreTeamB);
-        displayAMessage(valueTeamA);
-        displayBMessage(valueTeamB);
-        displayScoreForTeamA(winScoreTeamA);
     }
 
 
@@ -166,44 +168,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AdInTeamB(View view){
-        if (deuce && !adInB && !adInA || !deuce && adInB && adScoreB == 0 && !adInA || !deuce && adInB && adScoreB == 1 && !adInA || !deuce && !adInA){
-            adScoreB++;
-            adScoreA = 0;
-            valueTeamB = "Ad";
-            adInA = false;
-            deuce = false;
-            adInB = true;
-        }
-        if (adScoreA == 1 && adInA && !adInB || adInA && !adInB || adInA && adScoreA == 1 || adInA && adInB){
-            adScoreA = 0;
-            adScoreB = 0;
-            deuce = true;
-            valueTeamA = "Deuce";
-            valueTeamB = "Deuce";
-            adInA = false;
-        }
+        if (scoreTeamA == 40 && scoreTeamB == 40) {
+            if (deuce && !adInB && !adInA || !deuce && adInB && adScoreB == 0 && !adInA || !deuce && adInB && adScoreB == 1 && !adInA || !deuce && !adInA) {
+                adScoreB++;
+                adScoreA = 0;
+                valueTeamB = "Ad";
+                adInA = false;
+                deuce = false;
+                adInB = true;
+            }
+            if (adScoreA == 1 && adInA && !adInB || adInA && !adInB || adInA && adScoreA == 1 || adInA && adInB) {
+                adScoreA = 0;
+                adScoreB = 0;
+                deuce = true;
+                valueTeamA = "Deuce";
+                valueTeamB = "Deuce";
+                adInA = false;
+            }
 
-        if (adScoreB == 2){
-            winner = true;
+            if (adScoreB == 2) {
+                winner = true;
+            }
+            if (winner) {
+                winScoreTeamB++;
+                scoreTeamA = 0;
+                scoreTeamB = 0;
+                adScoreA = 0;
+                adScoreB = 0;
+                valueTeamA = "";
+                valueTeamB = "";
+                deuce = false;
+                adInA = false;
+                adInB = false;
+                winner = false;
+            }
+            displayForTeamA(scoreTeamA);
+            displayForTeamB(scoreTeamB);
+            displayAMessage(valueTeamA);
+            displayBMessage(valueTeamB);
+            displayScoreForTeamB(winScoreTeamB);
         }
-        if (winner) {
-            winScoreTeamB++;
-            scoreTeamA = 0;
-            scoreTeamB = 0;
-            adScoreA = 0;
-            adScoreB = 0;
-            valueTeamA = "";
-            valueTeamB = "";
-            deuce = false;
-            adInA = false;
-            adInB = false;
-            winner = false;
-        }
-        displayForTeamA(scoreTeamA);
-        displayForTeamB(scoreTeamB);
-        displayAMessage(valueTeamA);
-        displayBMessage(valueTeamB);
-        displayScoreForTeamB(winScoreTeamB);
     }
 
     public void reset(View view){
