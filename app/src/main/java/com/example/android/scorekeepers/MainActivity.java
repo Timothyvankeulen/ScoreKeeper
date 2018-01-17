@@ -14,9 +14,11 @@ public class MainActivity extends AppCompatActivity {
     String valueTeamA;
     String valueTeamB;
     boolean deuce = false;
+    boolean newdeuce = false;
     boolean adInA = false;
     boolean adInB = false;
     boolean winner = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addPointTeamA(View view){
+        //Win condition
+        if (scoreTeamA == 40 && scoreTeamB == 0 || scoreTeamA == 40 && scoreTeamB == 15 || scoreTeamA == 40 && scoreTeamB == 30){
+            winner = true;
+        }
         //Adding Points
         if (scoreTeamA == 0 || scoreTeamA == 15){
             scoreTeamA = scoreTeamA + 15;
@@ -34,16 +40,15 @@ public class MainActivity extends AppCompatActivity {
             scoreTeamA = scoreTeamA + 10;
             valueTeamA = "";
         }
-
-        //Checking for Love/Advantage/Deuce
+        //Checking for Love/Deuce
         if (scoreTeamA == 15 && scoreTeamB == 0 || scoreTeamA == 30 && scoreTeamB == 0 || scoreTeamA == 40 && scoreTeamB == 0) {
             valueTeamB = "Love";
         }
-
-        if (scoreTeamA == 40 && scoreTeamB == 40 && !deuce){
+        else if (scoreTeamA == 40 && scoreTeamB == 40 && !deuce){
             valueTeamA = "Deuce";
             valueTeamB = "Deuce";
             deuce = true;
+            newdeuce = true;
             adScoreA = 0;
         }
 
@@ -61,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
             adScoreB = 0;
             winner = false;
         }
-        if (scoreTeamA == 40 && scoreTeamB == 0 || adScoreA == 2){
-            winner = true;
-        }
 
         //Displaying messages
         displayForTeamA(scoreTeamA);
@@ -74,13 +76,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AdInTeamA(View view){
-        if (deuce && adScoreA == 0 || deuce && adScoreA == 1){
-            valueTeamA = "Ad In";
-            valueTeamB = "Deuce";
+        if (deuce && !adInA && !adInB || !deuce && adInA && adScoreA == 0 && !adInB || !deuce && adInA && adScoreA == 1 && !adInB || !deuce && !adInB){
             adScoreA++;
             adScoreB = 0;
+            valueTeamA = "Ad";
+            adInB = false;
+            deuce = false;
+            adInA = true;
         }
-        if (scoreTeamA == 40 && scoreTeamB == 0 || adScoreA == 2){
+        if (adScoreB == 1 && adInB && !adInA || adInB && !adInA || adInB && adScoreB == 1 || adInA && adInB){
+            adScoreA = 0;
+            adScoreB = 0;
+            deuce = true;
+            valueTeamA = "Deuce";
+            valueTeamB = "Deuce";
+            adInB = false;
+        }
+        if (adScoreA == 2){
             winner = true;
         }
         if (winner) {
@@ -105,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void addPointTeamB(View view){
+        //Win condition
+        if (scoreTeamB == 40 && scoreTeamA == 0 || scoreTeamB == 40 && scoreTeamA == 15 || scoreTeamB == 40 && scoreTeamA == 30) {
+            winner = true;
+        }
         //Adding Points
         if (scoreTeamB == 0 || scoreTeamB == 15){
             scoreTeamB = scoreTeamB + 15;
@@ -115,12 +131,12 @@ public class MainActivity extends AppCompatActivity {
             valueTeamB = "";
         }
 
-        //Checking for Love/Advantage/Deuce
+        //Checking for Love/Deuce
         if (scoreTeamB == 15 && scoreTeamA == 0 || scoreTeamB == 30 && scoreTeamA == 0 || scoreTeamB == 40 && scoreTeamA == 0) {
             valueTeamA = "Love";
         }
 
-        if (scoreTeamA == 40 && scoreTeamB == 40 && !deuce){
+        else if (scoreTeamA == 40 && scoreTeamB == 40 && !deuce){
             valueTeamA = "Deuce";
             valueTeamB = "Deuce";
             deuce = true;
@@ -141,10 +157,6 @@ public class MainActivity extends AppCompatActivity {
             adScoreB = 0;
             winner = false;
         }
-        if (scoreTeamB == 40 && scoreTeamA == 0 || adScoreB == 2){
-            winner = true;
-        }
-
         //Displaying messages
         displayForTeamA(scoreTeamA);
         displayForTeamB(scoreTeamB);
@@ -154,13 +166,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AdInTeamB(View view){
-        if (deuce && adScoreB == 0 || deuce && adScoreB == 1){
-            valueTeamB = "Ad In";
-            valueTeamA = "Deuce";
+        if (deuce && !adInB && !adInA || !deuce && adInB && adScoreB == 0 && !adInA || !deuce && adInB && adScoreB == 1 && !adInA || !deuce && !adInA){
             adScoreB++;
             adScoreA = 0;
+            valueTeamB = "Ad";
+            adInA = false;
+            deuce = false;
+            adInB = true;
         }
-        if (scoreTeamB == 40 && scoreTeamA == 0 || adScoreB == 2){
+        if (adScoreA == 1 && adInA && !adInB || adInA && !adInB || adInA && adScoreA == 1 || adInA && adInB){
+            adScoreA = 0;
+            adScoreB = 0;
+            deuce = true;
+            valueTeamA = "Deuce";
+            valueTeamB = "Deuce";
+            adInA = false;
+        }
+
+        if (adScoreB == 2){
             winner = true;
         }
         if (winner) {
